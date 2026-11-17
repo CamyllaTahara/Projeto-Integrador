@@ -15,9 +15,13 @@
         {% endif %}
         
         <div class="info-vitrine">
-            <h1>{{ loja.nome_loja }}</h1>
-            <p class="status-loja-badge">🟢 Aberto para pedidos</p>
-        </div>
+    <h1>{{ loja.nome_loja }}</h1>
+    {% if loja.aberta == 1 %}
+        <p class="status-loja-badge aberta">🟢 Aberto para pedidos</p>
+    {% else %}
+        <p class="status-loja-badge fechada">🔴 Loja Fechada - Apenas Visualização do Cardápio</p>
+    {% endif %}
+</div>
     </div>
 </div>
     <div class="container-cardapio">

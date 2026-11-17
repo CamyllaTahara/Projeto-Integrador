@@ -12,7 +12,7 @@ publico_bp=Blueprint("publico", __name__)
 def cardapio_publico(id_loja):
     cursor = conexao.cursor(dictionary=True, buffered=True)
 
-    cursor.execute("SELECT * FROM loja WHERE id_loja = %s",(id_loja,))
+    cursor.execute("SELECT * FROM produto WHERE id_loja = %s AND ativo = 1", (id_loja,))
     loja=cursor.fetchone()
 
     if not loja:
@@ -38,11 +38,17 @@ def cardapio_publico(id_loja):
 
     produtos = []
     for p in produtos_brutos:
+        if p.get('ativo', 1) == 0:
+            continue
+
         estoque_total = p['estoque'] if p['estoque'] is not None else 10
         total_vendido = p['total_vendido'] if p['total_vendido'] is not None else 0
 
         p['estoque_disponivel'] = estoque_total - total_vendido
-        print(f"Produto: {p['nome_produto']} | Estoque Banco: {estoque_total} | Vendido: {total_vendido} | Disponível: {p['estoque_disponivel']}")
+        
+        if p['estoque_disponivel'] <= 0:
+            continue
+
         produtos.append(p)
 
     return render_template("publico/cardapio.html", loja=loja, produtos=produtos)
@@ -67,11 +73,13 @@ def adicionar_carrinho(id_produto):
     produto = cursor.fetchone()
 
 
+
     if not produto:
         cursor.close()
         return "Produto não encontrado"
 
     session["id_loja"] = produto["id_loja"]
+
 
     cursor.execute("""
         SELECT COALESCE(SUM(IP.quantidade), 0) as total_vendido
@@ -81,6 +89,9 @@ def adicionar_carrinho(id_produto):
     
     venda_info = cursor.fetchone()
     cursor.close()
+
+     
+  
 
     total_vendido = venda_info['total_vendido'] if venda_info and venda_info['total_vendido'] is not None else 0
     estoque_total = produto['estoque'] if produto['estoque'] is not None else 10
@@ -95,8 +106,7 @@ def adicionar_carrinho(id_produto):
     print(f"Estoque Disponível calculado: {estoque_disponivel}")
     print(f"---------------------")
 
-    if estoque_disponivel <= 0:
-        return "Produto indisponível no momento, por favor, tente novamente mais tarde."
+
 
     id_str = str(id_produto)
     quantidade_atual_no_carrinho = 0
@@ -562,10 +572,25 @@ def resumo_pedido():
         taxa_entrega = 0.0
 
     total_geral = total_produtos + taxa_entrega
-    cursor.close()
+    
 
     if request.method == "POST":
-        cursor = conexao.cursor(dictionary=True, buffered=True)
+      
+        cursor.execute("SELECT aberta FROM loja WHERE id_loja = %s", (id_loja,))
+        loja_status = cursor.fetchone()
+
+        if loja_status and loja_status["aberta"] == 0:
+            cursor.close()
+            return """
+            <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 9999; font-family: sans-serif;">
+                <div style="background: #fff0f5; padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2); max-width: 400px; border: 2px solid #ffb6c1;">
+                    <h2 style="color: #d81b60; margin-top: 0;">Loja Fechada! 🧁</h2>
+                    <p style="color: #555; font-size: 16px; line-height: 1.5;">Poxa, a loja acabou de fechar e não está aceitando novos pedidos no momento. Volte mais tarde para garantir sua encomenda!</p>
+                    <a href="/" style="display: inline-block; margin-top: 15px; background: #e91e63; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background 0.3s;">Voltar para o Cardápio</a>
+                </div>
+            </div>
+            """
+
 
         try:
             if not horario_entrega or not id_disponibilidade:

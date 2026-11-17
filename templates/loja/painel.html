@@ -13,6 +13,24 @@
             <p class="subtitulo-sistema">Bem-vindo(a) ao sistema de gestão</p>
         </div>
 
+     <div style="text-align: center; margin-bottom: 24px;">
+    <form action="{{ url_for('loja.status_toggle_loja') }}" method="POST" style="display: inline-block;">
+        {% if loja.aberta == 1 %}
+            <button type="submit" class="btn-status-loja">
+                <div class="status-badge aberta">
+                    🟢 Loja Aberta <span>(Clique para Fechar)</span>
+                </div>
+            </button>
+        {% else %}
+            <button type="submit" class="btn-status-loja">
+                <div class="status-badge fechada">
+                    🔴 Loja Fechada <span>(Clique para Abrir)</span>
+                </div>
+            </button>
+        {% endif %}
+    </form>
+</div>
+
         <div class="menu-grid">
             <a href="{{ url_for('loja.cadastrar_disponibilidade') }}" class="card-acao-menu">
                 <span class="icone-menu">📅</span>
@@ -24,11 +42,20 @@
                 <span class="titulo-menu">Cardápio</span>
             </a>
 
-            <a href="{{ url_for('loja.painel_pedidos') }}" class="card-acao-menu destaque-pedidos">
-                <span class="icone-menu">📦</span>
-                <span class="titulo-menu">Pedidos</span>
-            </a>
+            <a href="{{ url_for('loja.painel_pedidos') }}" class="card-acao-menu">
+    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+           <span class="icone-menu">📦</span>
+            <span class="titulo-menu">Pedidos</span>
+        </div>
 
+        {% if pedidos_pendentes > 0 %}
+            <span style="background-color: #e91e63; color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">
+                {{ pedidos_pendentes }} pendente{{ 's' if pedidos_pendentes > 1 else '' }}
+            </span>
+        {% endif %}
+    </div>
+</a>
             <a href="{{ url_for('loja.configurar_entrega') }}" class="card-acao-menu">
                 <span class="icone-menu">🚚</span>
                 <span class="titulo-menu">Configurações de Entrega</span>

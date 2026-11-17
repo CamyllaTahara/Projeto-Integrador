@@ -84,7 +84,7 @@ body {
     color: #b84a62;
 }
 
-/* Botão de Sair */
+
 .rodape-sair {
     text-align: center;
     border-top: 1px solid #eee;
@@ -106,4 +106,52 @@ body {
 
 .btn-sair:hover {
     background-color: #f1b0b7;
+}
+
+.btn-status-loja {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-block;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: 0.2s;
+}
+
+.status-badge.aberta {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1.5px solid #a5d6a7;
+}
+
+.status-badge.fechada {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1.5px solid #ef9a9a;
+}
+
+.status-badge span {
+    font-weight: normal;
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+.badge-pendentes {
+    background-color: #e91e63;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
 }

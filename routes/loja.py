@@ -145,14 +145,33 @@ def login_loja():
         return redirect(url_for("loja.painel_loja"))
 
     return render_template("loja/login.html") 
-
 @loja_bp.route("/loja/painel")
 def painel_loja():
-
     if "id_loja" not in session:
-        return redirect("/loja/login")
+        return redirect(url_for("loja.login_loja"))
 
-    return render_template("loja/painel.html")
+    id_loja = session["id_loja"]
+    cursor = conexao.cursor(dictionary=True)
+
+
+    cursor.execute("SELECT * FROM loja WHERE id_loja = %s", (id_loja,))
+    loja = cursor.fetchone()
+
+
+    cursor.execute("""
+        SELECT COUNT(*) AS pendentes 
+        FROM pedido 
+        WHERE id_loja = %s AND status_pedido = 'Aguardando Confirmação'
+    """, (id_loja,))
+    resultado_pedidos = cursor.fetchone()
+    pedidos_pendentes = resultado_pedidos["pendentes"] if resultado_pedidos else 0
+
+    cursor.close()
+
+    if not loja:
+        return "Loja não encontrada"
+
+    return render_template("loja/painel.html", loja=loja, pedidos_pendentes=pedidos_pendentes)
 
 @loja_bp.route("/loja/logout")
 def logout_loja():
@@ -570,73 +589,92 @@ def status_produto(id_produto):
 @loja_bp.route("/configurar-entrega", methods=["GET","POST"])
 def configurar_entrega():
     id_loja = session.get("id_loja")
-
     cursor = conexao.cursor(dictionary=True, buffered=True)
 
-    if request.method=="POST":
-
-        cep= request.form.get("cep")
+    if request.method == "POST":
+        cep = request.form.get("cep")
         rua = request.form.get("rua")
-        numero=request.form.get("numero")
-        bairro=request.form.get("bairro")
+        numero = request.form.get("numero")
+        bairro = request.form.get("bairro")
 
         raio_maximo_km = request.form.get("raio_maximo_km")
         permite_entrega = 1 if request.form.get("permite_entrega") else 0
         permite_retirada = 1 if request.form.get("permite_retirada") else 0
 
-
-        cursor.execute("SELECT id_endereco_loja FROM endereco_loja WHERE id_loja = %s",(id_loja,))
+        cursor.execute("SELECT id_endereco_loja FROM endereco_loja WHERE id_loja = %s", (id_loja,))
         end_atual = cursor.fetchone()
 
         if end_atual:
-            
-            print("VALORES RECEBIDOS:", id_loja, permite_entrega, permite_retirada, raio_maximo_km)
-            sql_end = "UPDATE endereco_loja SET cep=%s, rua=%s, numero=%s,bairro=%s WHERE id_loja=%s" 
-            cursor.execute(sql_end,(cep, rua, numero, bairro, id_loja))
-
+            sql_end = "UPDATE endereco_loja SET cep=%s, rua=%s, numero=%s, bairro=%s WHERE id_loja=%s" 
+            cursor.execute(sql_end, (cep, rua, numero, bairro, id_loja))
         else:
             sql_end = "INSERT INTO endereco_loja (id_loja, cep, rua, numero, bairro) VALUES (%s,%s,%s,%s,%s)"
-            cursor.execute(sql_end,(id_loja, cep, rua, numero, bairro))
+            cursor.execute(sql_end, (id_loja, cep, rua, numero, bairro))
 
-
-        sql_cfg="""
+        sql_cfg = """
         INSERT INTO configuracao_entrega (id_loja, permite_entrega, permite_retirada, raio_maximo_km) VALUES (%s,%s,%s,%s)
         ON DUPLICATE KEY UPDATE
-        permite_entrega=VALUES(permite_entrega),
-        permite_retirada=VALUES(permite_retirada),
-        raio_maximo_km=VALUES(raio_maximo_km)
+        permite_entrega = VALUES(permite_entrega),
+        permite_retirada = VALUES(permite_retirada),
+        raio_maximo_km = VALUES(raio_maximo_km)
         """
-        cursor.execute(sql_cfg,(id_loja, permite_entrega,permite_retirada,raio_maximo_km))
+        cursor.execute(sql_cfg, (id_loja, permite_entrega, permite_retirada, raio_maximo_km))
+
+
+        cursor.execute("SELECT id_configuracao_entrega FROM configuracao_entrega WHERE id_loja = %s", (id_loja,))
+        cfg_obj = cursor.fetchone()
+        
+        if cfg_obj and raio_maximo_km:
+            id_cfg = cfg_obj["id_configuracao_entrega"]
+            raio_max = int(float(raio_maximo_km))
+
+ 
+            for km in range(1, raio_max + 1):
+                cursor.execute("""
+                    SELECT id_taxa_entrega FROM taxa_entrega 
+                    WHERE id_configuracao_entrega = %s AND distancia_maxima_entrega = %s
+                """, (id_cfg, km))
+                
+                if not cursor.fetchone():
+                    cursor.execute("""
+                        INSERT INTO taxa_entrega (id_configuracao_entrega, distancia_maxima_entrega, valor_taxa)
+                        VALUES (%s, %s, %s)
+                    """, (id_cfg, km, 0.00))
+
+
+            cursor.execute("""
+                DELETE FROM taxa_entrega 
+                WHERE id_configuracao_entrega = %s AND distancia_maxima_entrega > %s
+            """, (id_cfg, raio_max))
 
         conexao.commit()
         cursor.close()
         return redirect(url_for("loja.configurar_entrega"))
 
-    cursor.execute("SELECT * FROM endereco_loja WHERE id_loja = %s",(id_loja,))
+    cursor.execute("SELECT * FROM endereco_loja WHERE id_loja = %s", (id_loja,))
     endereco = cursor.fetchone()
 
-    cursor.execute("SELECT * FROM configuracao_entrega WHERE id_loja=%s",(id_loja,))
-    config=cursor.fetchone()
+    cursor.execute("SELECT * FROM configuracao_entrega WHERE id_loja = %s", (id_loja,))
+    config = cursor.fetchone()
     faixas_km = []
 
     if config and config.get("raio_maximo_km"):
         id_cfg = config['id_configuracao_entrega']
         raio_max = int(float(config['raio_maximo_km']))
 
-        cursor.execute("SELECT * FROM taxa_entrega WHERE id_configuracao_entrega=%s",(id_cfg,))
+        cursor.execute("SELECT * FROM taxa_entrega WHERE id_configuracao_entrega = %s", (id_cfg,))
         taxas_existentes = cursor.fetchall()
 
         mapa_taxas = {int(float(t['distancia_maxima_entrega'])): t['valor_taxa'] for t in taxas_existentes}
 
-        for km in range(1, raio_max +1):
+        for km in range(1, raio_max + 1):
             faixas_km.append({
-                "km":km,
+                "km": km,
                 "valor": mapa_taxas.get(km, 0.00)
             })
 
     cursor.close()
-    return render_template("loja/configurar_entrega.html",endereco=endereco, config=config, faixas_km=faixas_km)
-        
+    return render_template("loja/configurar_entrega.html", endereco=endereco, config=config, faixas_km=faixas_km)
 
 
 @loja_bp.route("/salvar-taxas-km", methods=["POST"])
@@ -706,6 +744,15 @@ def cadastrar_disponibilidade():
     """, (id_loja,))
     disponibilidade = cursor.fetchall()
     print("DADOS VINDO DO BANCO:", disponibilidade)
+
+    cursor.execute("""
+    DELETE FROM disponibilidade 
+    WHERE data_disponivel < CURDATE() 
+    AND id_disponibilidade NOT IN (
+        SELECT DISTINCT id_disponibilidade FROM pedido WHERE id_disponibilidade IS NOT NULL
+    )
+""")
+    conexao.commit()
 
     cursor.close()
 
@@ -856,3 +903,22 @@ def imprimir_pedido(id_pedido):
 @loja_bp.route('/portal_lojas')
 def portal_lojas():
     return render_template('loja/portal_loja.html')
+
+@loja_bp.route("/loja/status-toggle", methods=["POST"])
+def status_toggle_loja():
+    if "id_loja" not in session:
+        return redirect(url_for("loja.login_loja"))
+    
+    id_loja = session["id_loja"]
+    cursor = conexao.cursor(dictionary=True)
+    
+    cursor.execute("SELECT aberta FROM loja WHERE id_loja = %s", (id_loja,))
+    loja = cursor.fetchone()
+    
+    if loja:
+        novo_status = 0 if loja["aberta"] == 1 else 1
+        cursor.execute("UPDATE loja SET aberta = %s WHERE id_loja = %s", (novo_status, id_loja))
+        conexao.commit()
+    
+    cursor.close()
+    return redirect(request.referrer or url_for("loja.produtos"))
