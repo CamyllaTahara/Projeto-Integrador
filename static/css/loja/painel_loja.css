@@ -1,0 +1,109 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.container-painel-loja {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(224, 109, 132, 0.15);
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+.topo-loja {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.topo-loja h1 {
+    color: #b84a62;
+    font-size: 1.6rem;
+    margin: 0 0 5px 0;
+}
+
+.topo-loja h2 {
+    color: #333;
+    font-size: 1.2rem;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+}
+
+.subtitulo-sistema {
+    font-size: 0.85rem;
+    color: #777;
+    margin: 0;
+}
+
+/* Grid de opções do painel */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.card-acao-menu {
+    background-color: #fdf8f9;
+    border: 1px solid #f1d3d8;
+    border-radius: 10px;
+    padding: 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.2s ease;
+}
+
+.card-acao-menu:hover {
+    background-color: #fef2f4;
+    border-color: #e06d84;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(224, 109, 132, 0.1);
+}
+
+.icone-menu {
+    font-size: 1.8rem;
+}
+
+.titulo-menu {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #b84a62;
+}
+
+/* Botão de Sair */
+.rodape-sair {
+    text-align: center;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.btn-sair {
+    display: inline-block;
+    background-color: #f8d7dc;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-sair:hover {
+    background-color: #f1b0b7;
+}

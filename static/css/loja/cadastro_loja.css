@@ -1,0 +1,148 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.container-cadastro {
+    background: white;
+    padding: 35px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(224, 109, 132, 0.15);
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #b84a62;
+    text-align: center;
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.campo-grupo {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 0.95ln;
+    font-size: 0.95rem;
+    outline: none;
+    background-color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    border-color: #e06d84;
+    box-shadow: 0 0 0 0.2rem rgba(224, 109, 132, 0.25);
+}
+
+.form-control-file {
+    width: 100%;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.btn-acao {
+    width: 100%;
+    background-color: #e06d84;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+    margin-top: 15px;
+}
+
+.btn-acao:hover {
+    background-color: #b84a62;
+}
+
+.rodape-link {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.rodape-link small {
+    color: #777;
+    font-size: 0.85rem;
+}
+
+.rodape-link a {
+    color: #b84a62;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.rodape-link a:hover {
+    text-decoration: underline;
+}
+
+.input-arquivo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.input-file-oculto {
+    display: none;
+}
+
+
+.btn-escolher-arquivo {
+    background-color: #fef2f4;
+    color: #b84a62;
+    border: 1px solid #e06d84;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.2s, border-color 0.2s;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.btn-escolher-arquivo:hover {
+    background-color: #f8d7dc;
+    border-color: #b84a62;
+}
+
+.texto-arquivo-escolhido {
+    font-size: 0.85rem;
+    color: #666;
+    word-break: break-all;
+}

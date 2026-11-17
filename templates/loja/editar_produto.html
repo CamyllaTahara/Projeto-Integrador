@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Produto - Painel da Loja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loja/editar_produto.css') }}">
+</head>
+<body>
+
+    <div class="container-editar">
+        <h1>Editar Produto</h1>
+        <p class="subtitulo">Atualize as informações, fotos e status do seu item.</p>
+
+   
+        <div class="status-barra">
+            <div class="status-info">
+                <span>Status atual:</span>
+                {% if produto.ativo == 1 %}
+                    <span class="badge-status ativo">● Ativo</span>
+                {% else %}
+                    <span class="badge-status inativo">● Inativo</span>
+                {% endif %}
+            </div>
+
+            <form action="{{ url_for('loja.status_produto', id_produto=produto.id_produto) }}" method="POST">
+                {% if produto.ativo == 1 %}
+                    <button type="submit" class="btn-acao status-pausar">Pausar / Inativar</button>
+                {% else %}
+                    <button type="submit" class="btn-acao status-ativar">Ativar Produto</button>
+                {% endif %}
+            </form>
+        </div>
+
+        
+        <form method="POST" enctype="multipart/form-data" class="form-editar">
+
+            <div class="campo-grupo">
+                <label>Nome do Produto:</label>
+                <input type="text" name="nome_produto" class="form-control" value="{{ produto.nome_produto }}" required>
+            </div>
+
+            <div class="campo-grupo">
+                <label>Descrição:</label>
+                <textarea name="descricao" class="form-control" rows="3">{{ produto.descricao }}</textarea>
+            </div>
+
+            <div class="campo-grid">
+                <div class="campo-grupo">
+                    <label>Peso (gramas):</label>
+                    <input type="number" name="peso_gramas" class="form-control" value="{{ produto.peso_gramas }}">
+                </div>
+
+                <div class="campo-grupo">
+                    <label>Rendimento (fatias):</label>
+                    <input type="number" name="quantidade_porcoes" class="form-control" value="{{ produto.quantidade_porcoes }}">
+                </div>
+            </div>
+
+            <div class="campo-grid">
+                <div class="campo-grupo">
+                    <label>Preço (R$):</label>
+                    <input type="number" step="0.01" name="preco" class="form-control" value="{{ produto.preco }}" required>
+                </div>
+
+                <div class="campo-grupo">
+                    <label>Estoque Disponível:</label>
+                    <input type="number" name="estoque" class="form-control" value="{{ produto.estoque }}" required>
+                </div>
+            </div>
+
+      
+            <div class="campo-grupo">
+                <label>Fotos do Produto (Máximo 3 fotos):</label>
+                <div class="input-arquivo-wrapper">
+                    <input type="file" id="foto_produto" name="foto_produto" multiple accept="image/*" class="input-file-oculto" onchange="atualizarNomeArquivo(this, 'nome-fotos')">
+                    <label for="foto_produto" class="btn-escolher-arquivo">📷 Escolher Novas Fotos</label>
+                    <span id="nome-fotos" class="texto-arquivo-escolhido">Nenhum arquivo escolhido</span>
+                </div>
+            </div>
+
+            <div class="galeria-fotos">
+                <p class="legenda-secao">Fotos atuais cadastradas:</p>
+                <div class="galeria-grid">
+                    {% for f in fotos %}
+                        <div class="foto-card">
+                            <img src="{{ url_for('static', filename=f.caminho_foto) }}" alt="Foto do produto">
+                        </div>
+                    {% else %}
+                        <p class="texto-vazio">Nenhuma foto cadastrada para este produto.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if video_produto and video_produto.caminho_video %}
+                <div class="campo-grupo">
+                    <label>Vídeo Atual:</label>
+                    <div class="video-container-atual">
+                        <video controls>
+                            <source src="{{ url_for('static', filename=video_produto.caminho_video) }}" type="video/mp4">
+                            Seu navegador não suporta vídeos.
+                        </video>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="campo-grupo">
+                <label>Enviar ou Trocar Vídeo:</label>
+                <div class="input-arquivo-wrapper">
+                    <input type="file" id="video_produto" name="video_produto" accept="video/mp4,video/mkv" class="input-file-oculto" onchange="atualizarNomeArquivo(this, 'nome-video')">
+                    <label for="video_produto" class="btn-escolher-arquivo">🎬 Escolher Vídeo</label>
+                    <span id="nome-video" class="texto-arquivo-escolhido">Nenhum arquivo escolhido</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-acao principal">Salvar Alterações</button>
+        </form>
+
+        <div class="rodape-voltar">
+            <a href="{{ url_for('loja.produtos') }}" class="link-voltar">← Voltar para o Cardápio</a>
+        </div>
+    </div>
+
+<script src="{{ url_for('static', filename='js/editar_produto.js') }}"></script>
+</body>
+</html>

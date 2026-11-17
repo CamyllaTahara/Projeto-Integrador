@@ -1,0 +1,224 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.container-entrega {
+    background: white;
+    padding: 35px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(224, 109, 132, 0.15);
+    width: 100%;
+    max-width: 750px;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #b84a62;
+    text-align: center;
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+h3 {
+    color: #b84a62;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f1d3d8;
+    padding-bottom: 8px;
+}
+
+.subtitulo {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+.subtitulo-tabela {
+    color: #555;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.form-secao {
+    background-color: #fdf8f9;
+    border: 1px solid #f1d3d8;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.campo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.campo-grid-tres {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+}
+
+.campo-grupo {
+    margin-bottom: 15px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+    outline: none;
+    background-color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    border-color: #e06d84;
+    box-shadow: 0 0 0 0.2rem rgba(224, 109, 132, 0.25);
+}
+
+/* Checkboxes modernos */
+.checkbox-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #444;
+    cursor: pointer;
+}
+
+.checkbox-container input {
+    accent-color: #e06d84;
+    width: 18px;
+    height: 18px;
+}
+
+/* Tabela Estilizada de Frete */
+.tabela-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #f1d3d8;
+    margin-bottom: 15px;
+}
+
+.tabela-custom {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.tabela-custom th {
+    background-color: #fef2f4;
+    color: #b84a62;
+    padding: 12px 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #f1d3d8;
+}
+
+.tabela-custom td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f1f1f1;
+    color: #444;
+    vertical-align: middle;
+}
+
+.tabela-custom tr:last-child td {
+    border-bottom: none;
+}
+
+.ajuda-texto {
+    font-size: 0.8rem;
+    color: #777;
+    display: block;
+    margin-top: 4px;
+}
+
+.aviso-alerta {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.divisor {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 25px 0;
+}
+
+.btn-acao {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+}
+
+.btn-acao.principal {
+    background-color: #e06d84;
+    color: white;
+    margin-top: 5px;
+}
+
+.btn-acao.principal:hover {
+    background-color: #b84a62;
+}
+
+.rodape-voltar {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.link-voltar {
+    color: #b84a62;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.link-voltar:hover {
+    text-decoration: underline;
+}

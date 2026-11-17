@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Configurações de Entrega - Painel da Loja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loja/configurar_entrega.css') }}">
+</head>
+<body>
+
+    <div class="container-entrega">
+        <h1>Configurações de Entrega da Loja</h1>
+        <p class="subtitulo">Gerencie o endereço de origem, regras de atendimento e a tabela de frete por quilômetro.</p>
+
+ 
+        <form action="{{ url_for('loja.configurar_entrega') }}" method="POST" class="form-secao">
+            <h3>📍 Endereço da Loja (Origem)</h3>
+
+            <div class="campo-grid-tres">
+                <div class="campo-grupo">
+                    <label>CEP:</label>
+                    <input type="text" id="cep" name="cep" class="form-control" value="{{ endereco.cep if endereco else '' }}" placeholder="00000-000" maxlength="9" required>
+                </div>
+                <div class="campo-grupo span-dois">
+                    <label>Rua:</label>
+                    <input type="text" id="rua" name="rua" class="form-control" value="{{ endereco.rua if endereco else '' }}" required>
+                </div>
+            </div>
+
+            <div class="campo-grid">
+                <div class="campo-grupo">
+                    <label>Número:</label>
+                    <input type="text" name="numero" class="form-control" value="{{ endereco.numero if endereco else '' }}" required>
+                </div>
+                <div class="campo-grupo">
+                    <label>Bairro:</label>
+                    <input type="text" id="bairro" name="bairro" class="form-control" value="{{ endereco.bairro if endereco else '' }}" required>
+                </div>
+            </div>
+
+            <h3 class="mt-20">⚙️ Regras de Atendimento e Raio</h3>
+
+            <div class="campo-grupo">
+                <label>Raio Máximo de Entrega (KM):</label>
+                <input type="number" step="0.1" name="raio_maximo_km" class="form-control" value="{{ config.raio_maximo_km if config else '' }}" placeholder="Ex: 10.0" required>
+            </div>
+
+            <div class="checkbox-grupo">
+                <label class="checkbox-container">
+                    <input type="checkbox" name="permite_entrega" value="1" {% if config and config.permite_entrega %}checked{% endif %}>
+                    <span class="checkmark"></span>
+                    Permitir Entregas a Domicílio
+                </label>
+
+                <label class="checkbox-container">
+                    <input type="checkbox" name="permite_retirada" value="1" {% if config and config.permite_retirada %}checked{% endif %}>
+                    <span class="checkmark"></span>
+                    Permitir Retirada no Local
+                </label>
+            </div>
+
+            <button type="submit" class="btn-acao principal">Salvar Configurações Gerais</button>
+        </form>
+
+        <hr class="divisor">
+
+        {% if config and config.raio_maximo_km %}
+            <h3>🚚 Tabela de Frete por Quilômetro</h3>
+            <p class="subtitulo-tabela">Raio ativo configurado: <strong>{{ config.raio_maximo_km }} km</strong></p>
+         
+            <form action="{{ url_for('loja.salvar_taxas_km') }}" method="POST" class="form-secao">
+                
+                <div class="tabela-container">
+                    <table class="tabela-custom">
+                        <thead>
+                            <tr>
+                                <th>Distância</th>
+                                <th>Valor do Frete (R$)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for faixa in faixas_km %}
+                            <tr>
+                                <td>
+                                    Até {{ faixa.km }} km
+                                    <input type="hidden" name="distancia_km" value="{{ faixa.km }}">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" min="0" name="valor_taxa" class="form-control" value="{{ '%.2f'|format(faixa.valor) }}" placeholder="Ex: 5.00" required>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="campo-grupo mt-20">
+                    <label for="prazo_minimo_horas">Prazo Mínimo para Pedidos (em horas):</label>
+                    <input type="number" id="prazo_minimo_horas" name="prazo_minimo_horas" class="form-control" value="{{ config.prazo_minimo_horas }}" min="0" required>
+                    <small class="ajuda-texto">Ex: Digite 24 para exigir que os pedidos sejam feitos com pelo menos 1 dia de antecedência.</small>
+                </div>
+                
+                <button type="submit" class="btn-acao principal">Salvar Tabela de Frete e Prazos</button>
+            </form>
+        {% else %}
+            <div class="aviso-alerta">
+                <p><em>⚠️ Defina e salve o raio máximo de entrega acima para liberar a configuração da tabela de frete por KM.</em></p>
+            </div>
+        {% endif %}
+
+        <div class="rodape-voltar">
+            <a href="{{ url_for('loja.painel_loja') }}" class="link-voltar">← Voltar ao Painel da Loja</a>
+        </div>
+    </div>
+
+   
+    <script src="{{ url_for('static', filename='js/viacep.js') }}"></script>
+</body>
+</html>

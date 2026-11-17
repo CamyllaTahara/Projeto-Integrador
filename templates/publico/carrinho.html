@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Seu Carrinho de Compras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/publico/carrinho.css') }}">
+</head>
+<body>
+    <div class="container-carrinho">
+        <h1>🛒 Seu Carrinho</h1>
+
+        {% if carrinho %}
+            <table class="tabela-carrinho">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Preço Unitário</th>
+                        <th>Qtd</th>
+                        <th>Subtotal</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id_produto, item in carrinho.items() %}
+                    <tr>
+                        <td>{{ item.nome }}</td>
+                        <td>R$ {{ "%.2f" | format(item.preco) }}</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td>R$ {{ "%.2f" | format(item.subtotal) }}</td>
+                        <td>
+                            <a href="{{ url_for('publico.remover_carrinho', id_produto=id_produto) }}" class="btn-remover">Remover</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h3 class="total-geral">Total Geral: R$ {{ "%.2f" | format(total_geral) }}</h3>
+
+            <div class="acoes-carrinho">
+                <a href="{{ url_for('publico.cardapio_publico', id_loja=id_loja) }}" class="btn-acao secundario">Continuar Comprando</a>
+                
+                {% if session.get('id_cliente') %}
+                    <a href="{{ url_for('publico.iniciar_checkout') }}" class="btn-acao principal">Finalizar Pedido</a>
+                {% else %}
+                    <a href="{{ url_for('cliente.login_cliente') }}" class="btn-acao principal">Entrar</a>
+                    <a href="{{ url_for('cliente.cadastro_cliente') }}" class="btn-acao secundario">Cadastrar</a>
+                {% endif %}
+            </div>
+
+        {% else %}
+            <p class="carrinho-vazio">O seu carrinho está vazio! 😢</p>
+            <div class="acoes-carrinho text-center">
+                <a href="{{ url_for('publico.cardapio_publico', id_loja=id_loja) }}" class="btn-acao principal">Voltar para o Cardápio</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

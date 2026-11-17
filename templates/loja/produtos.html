@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cardápio e Produtos - Painel da Loja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loja/produtos.css') }}">
+</head>
+<body>
+
+    <div class="container-produtos">
+        <h1>Cadastro de Produtos</h1>
+        <p class="subtitulo">Adicione novos itens ao cardápio da sua doceria.</p>
+
+        <form action="/loja/produtos" method="POST" enctype="multipart/form-data" class="form-produto">
+
+            <div class="campo-grupo">
+                <label>Nome do Produto:</label>
+                <input type="text" name="nome_produto" class="form-control" required>
+            </div>
+
+            <div class="campo-grupo">
+                <label>Descrição:</label>
+                <textarea name="descricao" class="form-control" rows="3" placeholder="Ex: Massa de chocolate com recheio cremoso..."></textarea>
+            </div>
+
+            <div class="campo-grid">
+                <div class="campo-grupo">
+                    <label>Peso (gramas):</label>
+                    <input type="number" name="peso_gramas" class="form-control" placeholder="Ex: 150">
+                </div>
+
+                <div class="campo-grupo">
+                    <label>Rendimento (fatias):</label>
+                    <input type="number" name="quantidade_porcoes" class="form-control" placeholder="Ex: 8">
+                </div>
+            </div>
+
+            <div class="campo-grid">
+                <div class="campo-grupo">
+                    <label>Preço (R$):</label>
+                    <input type="number" step="0.01" name="preco" class="form-control" placeholder="0.00" required>
+                </div>
+
+                <div class="campo-grupo">
+                    <label>Estoque Disponível:</label>
+                    <input type="number" name="estoque" class="form-control" value="1" required>
+                </div>
+            </div>
+
+           
+            <div class="campo-grupo">
+                <label>Foto do Produto:</label>
+                <div class="input-arquivo-wrapper">
+                    <input type="file" id="foto_produto" name="foto_produto" accept="image/*" class="input-file-oculto" onchange="atualizarNomeArquivo(this, 'nome-foto')">
+                    <label for="foto_produto" class="btn-escolher-arquivo">📷 Escolher Foto</label>
+                    <span id="nome-foto" class="texto-arquivo-escolhido">Nenhum arquivo escolhido</span>
+                </div>
+            </div>
+
+           
+            <div class="campo-grupo">
+                <label>Vídeo do Produto (Opcional):</label>
+                <div class="input-arquivo-wrapper">
+                    <input type="file" id="video_produto" name="video_produto" accept="video/mp4,video/mkv" class="input-file-oculto" onchange="atualizarNomeArquivo(this, 'nome-video')">
+                    <label for="video_produto" class="btn-escolher-arquivo">🎬 Escolher Vídeo</label>
+                    <span id="nome-video" class="texto-arquivo-escolhido">Nenhum arquivo escolhido</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-acao principal">Cadastrar Produto</button>
+        </form>
+
+        <hr class="divisor">
+
+        <h2>Meus Produtos Cadastrados</h2>
+
+        {% if produtos %}
+            <div class="lista-produtos-grid">
+                {% for produto in produtos %}
+                <div class="card-produto-item">
+                    <div class="produto-info-topo">
+                        <h3>{{ produto.nome_produto }}</h3>
+                        <span class="badge-status {{ 'ativo' if produto.ativo else 'inativo' }}">
+                            {{ 'Ativo' if produto.ativo else 'Inativo' }}
+                        </span>
+                    </div>
+
+                    <p class="descricao-prod">{{ produto.descricao }}</p>
+                    
+                    <div class="detalhes-tecnicos">
+                        <span>⚖️ {{ produto.peso_gramas }}g</span>
+                        <span>🍰 {{ produto.quantidade_porcoes }} fatias</span>
+                        <span>📦 Estoque: {{ produto.estoque }} un</span>
+                    </div>
+
+                    <p class="preco-prod">R$ {{ "%.2f" % produto.preco }}</p>
+
+              
+                    <div class="midia-produto">
+                        {% if produto.caminho_foto %}
+                            <div class="foto-card">
+                                <img src="{{ url_for('static', filename=produto.caminho_foto) }}" alt="Foto do produto">
+                            </div>
+                        {% endif %}
+
+                        {% if produto.caminho_video %}
+                            <div class="video-card">
+                                <video controls>
+                                    <source src="{{ url_for('static', filename=produto.caminho_video) }}" type="video/mp4">
+                                    Seu navegador não suporta vídeos.
+                                </video>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                  
+                    <div class="acoes-produto">
+                        <a href="{{ url_for('loja.editar_produto', id_produto=produto.id_produto) }}" class="btn-acao editar">Editar</a>
+                        
+                        <form action="{{ url_for('loja.excluir_produto', id_produto=produto.id_produto) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este produto?');" style="flex: 1;">
+                            <button type="submit" class="btn-acao excluir">Excluir</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="texto-vazio">Você ainda não possui produtos cadastrados.</p>
+        {% endif %}
+
+        <div class="rodape-voltar">
+            <a href="{{ url_for('loja.painel_loja') }}" class="link-voltar">← Voltar ao Painel da Loja</a>
+        </div>
+    </div>
+
+<script src="{{ url_for('static', filename='js/produtos.js') }}"></script>
+</body>
+</html>

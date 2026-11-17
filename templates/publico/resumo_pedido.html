@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumo do Pedido e Pagamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/publico/resumo_pedido.css') }}">
+</head>
+<body>
+
+    <div class="container-resumo">
+        <h1>📋 Resumo do Seu Pedido</h1>
+        <h2 class="numero-pedido">Pedido nº {{ numero_pedido }}</h2>
+
+        <div class="secao-bloco">
+            <h3>📍 Tipo de Atendimento</h3>
+            {% if session.get('modalidade') == 'retirada' %}
+                <div class="info-card destaque">
+                    <p>📦 <strong>Modalidade: Retirada no Local</strong></p>
+                    <p class="sub-texto"><em>Você irá buscar o seu pedido diretamente na loja. Sem taxa de entrega.</em></p>
+                </div>
+            {% else %}
+                <h3>Endereço de Entrega</h3>
+                {% if endereco %}
+                    <div class="info-card">
+                        <p><strong>Rua:</strong> {{ endereco.rua }}, {{ endereco.numero }} - {{ endereco.bairro }}</p>
+                        <p><strong>CEP:</strong> {{ endereco.cep }} {% if endereco.complemento %}| Comp: {{ endereco.complemento }}{% endif %}</p>
+                    </div>
+                {% else %}
+                    <p class="alerta-erro">Nenhum endereço cadastrado!</p>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="secao-bloco">
+            <h3>Horário {% if session.get('modalidade') == 'retirada' %}para Retirada{% else %}da Entrega{% endif %}:</h3>
+            {% if horario_escolhido %}
+                <div class="info-card">
+                    <p><strong>Data:</strong> {{ horario_escolhido.data_disponivel }}</p>
+                    <p><strong>Horário:</strong> Das {{ horario_escolhido.hora_inicio }} às {{ horario_escolhido.hora_fim }}</p>
+                </div>
+            {% else %}
+                <p class="alerta-erro">Nenhum horário agendado</p>
+            {% endif %}
+        </div>
+
+        <div class="secao-bloco">
+            <h3>🛒 Itens do Carrinho</h3>
+            <table class="tabela-resumo">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Qtd</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id_produto, item in carrinho.items() %}
+                    <tr>
+                        <td>{{ item.nome }}</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td>R$ {{ "%.2f" | format(item.preco * item.quantidade) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="valores-box">
+            <p>Subtotal dos Produtos: <span>R$ {{ "%.2f" | format(total_produtos) }}</span></p>
+            <p>Taxa de Entrega: <span>R$ {{ "%.2f" | format(taxa_entrega) }}</span></p>
+            <h2 class="total-geral">Total Geral: R$ {{ "%.2f" | format(total_geral) }}</h2>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="pagamento-box">
+            <h3>💳 Pagamento via PIX</h3>
+            <p>Para finalizar, realize o pagamento do valor total através da chave PIX abaixo:</p>
+            <div class="pix-chave-card">
+                <strong>Chave PIX (E-mail):</strong> <code>camyllaemy@outlook.com</code><br>
+                <small>Banco Itaú</small>
+            </div>
+            <p class="pix-aviso">Após o pagamento, clique no botão abaixo para registrar o seu pedido.</p>
+        </div>
+
+        <form action="{{ url_for('publico.resumo_pedido') }}" method="POST">
+            <button type="submit" class="btn-acao">
+                Confirmar Pedido
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>

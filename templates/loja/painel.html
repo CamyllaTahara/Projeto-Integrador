@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel da Loja - {{ session.get('nome_loja', 'Loja') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loja/painel_loja.css') }}">
+</head>
+<body>
+    <div class="container-painel-loja">
+        <div class="topo-loja">
+            <h1>Painel da Loja</h1>
+            <h2>{{ session.get('nome_loja', 'Minha Loja') }}</h2>
+            <p class="subtitulo-sistema">Bem-vindo(a) ao sistema de gestão</p>
+        </div>
+
+        <div class="menu-grid">
+            <a href="{{ url_for('loja.cadastrar_disponibilidade') }}" class="card-acao-menu">
+                <span class="icone-menu">📅</span>
+                <span class="titulo-menu">Disponibilidade</span>
+            </a>
+
+            <a href="{{ url_for('loja.produtos') }}" class="card-acao-menu">
+                <span class="icone-menu">🍰</span>
+                <span class="titulo-menu">Cardápio</span>
+            </a>
+
+            <a href="{{ url_for('loja.painel_pedidos') }}" class="card-acao-menu destaque-pedidos">
+                <span class="icone-menu">📦</span>
+                <span class="titulo-menu">Pedidos</span>
+            </a>
+
+            <a href="{{ url_for('loja.configurar_entrega') }}" class="card-acao-menu">
+                <span class="icone-menu">🚚</span>
+                <span class="titulo-menu">Configurações de Entrega</span>
+            </a>
+
+            <a href="{{ url_for('loja.editar_perfil', id_loja=session.get('id_loja')) }}" class="card-acao-menu">
+                <span class="icone-menu">⚙️</span>
+                <span class="titulo-menu">Configurar Perfil</span>
+            </a>
+        </div>
+
+        <div class="rodape-sair">
+            <a href="{{ url_for('loja.logout_loja') }}" class="btn-sair">SAIR DA CONTA</a>
+        </div>
+    </div>
+</body>
+</html>

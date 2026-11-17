@@ -1,0 +1,118 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container-carrinho {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(224, 109, 132, 0.15);
+    width: 100%;
+    max-width: 650px;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #b84a62;
+    text-align: center;
+    font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.tabela-carrinho {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tabela-carrinho th,
+.tabela-carrinho td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+}
+
+.tabela-carrinho th {
+    background-color: #fef2f4;
+    color: #b84a62;
+    font-weight: 600;
+}
+
+.btn-remover {
+    color: #e06d84;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.btn-remover:hover {
+    color: #b84a62;
+    text-decoration: underline;
+}
+
+.total-geral {
+    text-align: right;
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.acoes-carrinho {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.btn-acao {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background-color 0.2s;
+}
+
+.btn-acao.principal {
+    background-color: #e06d84;
+    color: white;
+}
+
+.btn-acao.principal:hover {
+    background-color: #b84a62;
+}
+
+.btn-acao.secundario {
+    background-color: #fef2f4;
+    color: #b84a62;
+    border: 1px solid #e06d84;
+}
+
+.btn-acao.secundario:hover {
+    background-color: #f8d7dc;
+}
+
+.carrinho-vazio {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin: 20px 0;
+}
+
+.text-center {
+    justify-content: center;
+}

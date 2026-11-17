@@ -1,0 +1,102 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container-agendamento {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(224, 109, 132, 0.15);
+    width: 100%;
+    max-width: 480px;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #b84a62;
+    text-align: center;
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.campo-grupo {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+    outline: none;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b84a62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.form-control:focus {
+    border-color: #e06d84;
+    box-shadow: 0 0 0 0.2rem rgba(224, 109, 132, 0.25);
+}
+
+
+.form-control option {
+    background-color: #ffffff;
+    color: #333;
+    padding: 10px;
+}
+
+.form-control option:hover,
+.form-control option:checked {
+    background-color: #fef2f4;
+    color: #b84a62;
+}
+
+.btn-acao {
+    width: 100%;
+    background-color: #e06d84;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+}
+
+.btn-acao:hover {
+    background-color: #b84a62;
+}

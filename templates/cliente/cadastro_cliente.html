@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro do Cliente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cliente/cadastro_cliente.css') }}">
+</head>
+
+<body>
+     <div class="container-cadastro">
+    <h1>Cadastro do Cliente</h1>
+    
+    <form action="/cliente/cadastro_cliente" method="POST" enctype="multipart/form-data">
+
+        <label>Nome Completo:</label>
+        <input type="text" name="nome_cliente">
+
+        <br><br>
+
+        <label>WhatsApp:</label>
+        <input type="tel" name="whatsapp">
+
+        <br><br> 
+
+        <label>Telefone Secundário (opcional):</label>
+        <input type="tel" name="telefone_secundario"> 
+
+
+        <br><br>
+        
+        <button type="submit">Cadastrar Dados</button>
+
+</div>
+    </form>
+
+</body>
+</html>
+
+
+
+

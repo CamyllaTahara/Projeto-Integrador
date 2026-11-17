@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/publico/agendamento.css') }}">
+</head>
+<body>
+
+    <div class="container-agendamento">
+        <h1>Escolha a Data e Horário</h1>
+
+        <form action="{{ url_for('publico.agendamento_data_hora') }}" method="POST">
+            
+            <div class="campo-grupo">
+                <label for="id_disponibilidade">Horários Disponíveis:</label>
+                <select name="id_disponibilidade" id="id_disponibilidade" class="form-control" required>
+                    <option value="">-- Selecione uma opção --</option>
+                    {% for disp in horarios_disponiveis %}
+                        <option value="{{ disp.id_disponibilidade }}">
+                            {{ disp.data_disponivel }} - Das {{ disp.hora_inicio }} às {{ disp.hora_fim }} (Capacidade: {{ disp.capacidade_maxima }})
+                        </option>
+                    {% else %}
+                        <option value="" disabled>Nenhum horário disponível no momento.</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn-acao">Avançar para o Pagamento</button>
+        </form>
+    </div>
+
+</body>
+</html>

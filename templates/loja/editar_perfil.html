@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Perfil - Painel da Loja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loja/editar_perfil.css') }}">
+</head>
+<body>
+
+    <div class="container-perfil">
+        <h1>Editar Perfil da Loja</h1>
+        <p class="subtitulo">Atualize as informações corporativas, contato e a logo do seu estabelecimento.</p>
+
+      
+        <form method="POST" enctype="multipart/form-data" class="form-perfil">
+
+
+            <div class="campo-grupo logo-secao">
+                <label>Logo da Loja:</label>
+                {% if loja.logo %}
+                    <div class="logo-atual-container">
+                        <img src="{{ url_for('static', filename=loja.logo) }}" alt="Logo da Loja" class="img-logo-atual">
+                        <span class="legenda-logo">Logo cadastrada atualmente</span>
+                    </div>
+                {% endif %}
+
+                <div class="input-arquivo-wrapper mt-10">
+                    <input type="file" id="logo" name="logo" accept="image/*" class="input-file-oculto" onchange="atualizarNomeArquivo(this, 'nome-logo')">
+                    <label for="logo" class="btn-escolher-arquivo">📷 Alterar Logo da Loja</label>
+                    <span id="nome-logo" class="texto-arquivo-escolhido">Nenhum arquivo escolhido</span>
+                </div>
+            </div>
+
+            <div class="campo-grid">
+                <div class="campo-grupo">
+                    <label>Nome do Responsável:</label>
+                    <input type="text" name="nome_responsavel" class="form-control" value="{{ loja.nome_responsavel }}" required>
+                </div>
+
+                <div class="campo-grupo">
+                    <label>Nome da Loja:</label>
+                    <input type="text" name="nome_loja" class="form-control" value="{{ loja.nome_loja }}" required>
+                </div>
+            </div>
+
+            <div class="campo-grid">
+                <div class="campo-grupo">
+                    <label>WhatsApp:</label>
+                    <input type="tel" name="whatsapp" class="form-control" value="{{ loja.whatsapp }}" placeholder="(00) 00000-0000" maxlength="15" required>
+                </div>
+
+                <div class="campo-grupo">
+                    <label>E-mail:</label>
+                    <input type="email" name="email" class="form-control" value="{{ loja.email }}" placeholder="contato@sualoja.com" required>
+                </div>
+            </div>
+
+            <div class="campo-grupo">
+                <label>CNPJ:</label>
+                <input type="text" id="cnpj" name="cnpj" class="form-control" value="{{ loja.cnpj }}" placeholder="00.000.000/0001-00" maxlength="18">
+            </div>
+
+            <button type="submit" class="btn-acao principal">Salvar Alterações</button>
+        </form>
+
+        <div class="rodape-voltar">
+            <a href="{{ url_for('loja.painel_loja') }}" class="link-voltar">← Voltar ao Painel da Loja</a>
+        </div>
+    </div>
+
+    
+   <script src="{{ url_for('static', filename='js/editar_perfil.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/mascaras.js') }}"></script>
+</body>
+</html>

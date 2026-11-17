@@ -1,0 +1,173 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.container-resumo {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(224, 109, 132, 0.15);
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #b84a62;
+    text-align: center;
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.numero-pedido {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 1.05rem;
+    color: #b84a62;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.info-card {
+    background-color: #fef2f4;
+    border: 1px solid #f8d7dc;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.info-card.destaque {
+    background-color: #fef2f4;
+    border-color: #e06d84;
+}
+
+.info-card p {
+    margin: 4px 0;
+    color: #444;
+}
+
+.sub-texto {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.alerta-erro {
+    color: #dc3545;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.tabela-resumo {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.tabela-resumo th,
+.tabela-resumo td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+}
+
+.tabela-resumo th {
+    background-color: #fef2f4;
+    color: #b84a62;
+    font-weight: 600;
+}
+
+.valores-box {
+    background-color: #fdf8f9;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px dashed #e06d84;
+    margin-top: 15px;
+}
+
+.valores-box p {
+    margin: 6px 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.total-geral {
+    color: #b84a62;
+    font-size: 1.25rem;
+    text-align: right;
+    margin-top: 10px;
+    margin-bottom: 0;
+    border-top: 1px solid #f1d3d8;
+    padding-top: 10px;
+}
+
+.pagamento-box {
+    margin-top: 20px;
+}
+
+.pix-chave-card {
+    background-color: #fef2f4;
+    border: 1px solid #e06d84;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.pix-chave-card code {
+    color: #b84a62;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.pix-aviso {
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.btn-acao {
+    width: 100%;
+    background-color: #e06d84;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+}
+
+.btn-acao:hover {
+    background-color: #b84a62;
+}
+.divisor {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 25px 0;
+}

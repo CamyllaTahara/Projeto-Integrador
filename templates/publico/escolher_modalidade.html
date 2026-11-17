@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Como deseja receber seu pedido?</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/publico/escolher_modalidade.css') }}">
+</head>
+<body>
+
+    <div class="container-modalidade">
+        <h1>Opções de Entrega e Retirada</h1>
+
+        <form action="{{ url_for('publico.escolher_modalidade') }}" method="POST">
+            
+            {% if config_loja.permite_retirada == 1 %}
+            <div class="opcao-card">
+                <input type="radio" id="retirada" name="modalidade" value="retirada" checked>
+                <label for="retirada">
+                    <strong>Retirar no Local</strong>
+                    Endereço: {{ config_loja.rua }}, {{ config_loja.numero }} - {{ config_loja.bairro }} (CEP: {{ config_loja.cep }})
+                </label>
+            </div>
+            {% endif %}
+
+            {% if config_loja.permite_entrega == 1 %}
+            <div class="opcao-card">
+                <input type="radio" id="entrega" name="modalidade" value="entrega">
+                <label for="entrega">
+                    <strong>Receber por Entrega (Delivery)</strong>
+                    Raio máximo de atendimento: até {{ config_loja.raio_maximo_km }} km. O frete será calculado no próximo passo.
+                </label>
+            </div>
+            {% endif %}
+
+            <button type="submit">Continuar</button>
+        </form>
+    </div>
+
+</body>
+</html>

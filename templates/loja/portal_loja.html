@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Portal do Lojista - AgendeAQUI - Sistema de Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loja/portal_lojas.css') }}">
+</head>
+<body>
+    <div class="container-portal">
+        <div class="icone-topo">🍰</div>
+        <h1>Portal do Lojista</h1>
+        <p class="subtitulo">
+            Gerencie seu cardápio, acompanhe pedidos em tempo real e expanda as vendas da sua doceria em um só lugar.
+        </p>
+
+        <div class="acoes-portal">
+            <a href="{{ url_for('loja.login_loja') }}" class="btn-acao principal">
+                Entrar na minha Conta
+            </a>
+            
+            <a href="{{ url_for('loja.cadastro_loja') }}" class="btn-acao secundario">
+                Cadastrar minha Loja Grátis
+            </a>
+        </div>
+        
+        <div class="rodape-ajuda">
+            <small>É cliente final? <a href="{{ url_for('publico.cardapio_publico', id_loja=1) }}">Acesse o Cardápio</a></small>
+        </div>
+    </div>
+</body>
+</html>

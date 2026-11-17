@@ -1,0 +1,32 @@
+
+   
+   body {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 13px;
+        width: 100%;
+        max-width: 60mm;
+        padding: 5px 2px 5px 30px;
+        box-sizing: border-box;
+        color: #000;
+        background: #fff;
+    }
+    .center { text-align: center; }
+    .bold { font-weight: bold; }
+    .line { border-bottom: 1px dashed #000; margin: 6px 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { font-size: 13px; text-align: left; padding: 3px 0; }
+    .right { text-align: right; }
+
+    @page {
+        size: 58mm auto;
+        margin: 15;
+    }
+
+    @media print {
+        body {
+            width: 74mm;
+            margin: 15;
+            padding: 20px 20px 20px 20px;
+        }
+        .no-print { display: none; }
+    }

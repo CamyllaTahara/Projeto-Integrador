@@ -1,0 +1,105 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container-portal {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(224, 109, 132, 0.15);
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.icone-topo {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+h1 {
+    color: #b84a62;
+    font-size: 1.7rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.subtitulo {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+.acoes-portal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-acao {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    padding: 13px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background-color 0.2s, border-color 0.2s;
+    text-align: center;
+}
+
+/* Botão Principal (Entrar) */
+.btn-acao.principal {
+    background-color: #e06d84;
+    color: white;
+    border: 1px solid #e06d84;
+}
+
+.btn-acao.principal:hover {
+    background-color: #b84a62;
+    border-color: #b84a62;
+}
+
+
+.btn-acao.secundario {
+    background-color: #fef2f4;
+    color: #b84a62;
+    border: 1px solid #e06d84;
+}
+
+.btn-acao.secundario:hover {
+    background-color: #f8d7dc;
+}
+
+.rodape-ajuda {
+    margin-top: 25px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.rodape-ajuda small {
+    color: #777;
+    font-size: 0.85rem;
+}
+
+.rodape-ajuda a {
+    color: #b84a62;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.rodape-ajuda a:hover {
+    text-decoration: underline;
+}

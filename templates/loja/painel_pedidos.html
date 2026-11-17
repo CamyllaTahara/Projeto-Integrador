@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Pedidos - Loja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loja/painel.css') }}">
+ 
+    <meta http-equiv="refresh" content="30">
+</head>
+<body>
+
+    <div class="painel-topo">
+        <div>
+            <h1>📦 Painel de Pedidos em Tempo Real</h1>
+            <p class="subtitulo-painel">Gerencie o fluxo de produção e entregas da sua doceria</p>
+        </div>
+        <div class="painel-acoes-topo">
+            <a href="{{ url_for('loja.painel_loja') }}" class="btn-voltar-painel">← Voltar ao Painel</a>
+        </div>
+    </div>
+
+    <hr class="divisor-topo">
+
+    {% if pedidos %}
+        <div class="kanban-board">
+
+       
+            <div class="kanban-column">
+                <div class="kanban-header aguardando">
+                    <span>⏳ Aguardando</span>
+                    <span class="badge-contador">
+                        {{ pedidos | selectattr('status_pedido', 'equalto', 'Aguardando Confirmação') | list | length }}
+                    </span>
+                </div>
+                <div class="kanban-cards">
+                    {% for pedido in pedidos %}
+                        {% if pedido.status_pedido == 'Aguardando Confirmação' %}
+                            {% include 'partials/card_pedido.html' %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+
+            <div class="kanban-column">
+                <div class="kanban-header confirmados">
+                    <span>🍳 Confirmados</span>
+                    <span class="badge-contador">
+                        {{ pedidos | selectattr('status_pedido', 'equalto', 'Confirmado') | list | length }}
+                    </span>
+                </div>
+                <div class="kanban-cards">
+                    {% for pedido in pedidos %}
+                        {% if pedido.status_pedido == 'Confirmado' %}
+                            {% include 'partials/card_pedido.html' %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+   
+            <div class="kanban-column">
+                <div class="kanban-header preparo">
+                    <span>🔥 Em Preparo</span>
+                    <span class="badge-contador">
+                        {{ pedidos | selectattr('status_pedido', 'equalto', 'Em preparo') | list | length }}
+                    </span>
+                </div>
+                <div class="kanban-cards">
+                    {% for pedido in pedidos %}
+                        {% if pedido.status_pedido == 'Em preparo' %}
+                            {% include 'partials/card_pedido.html' %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+           
+            <div class="kanban-column">
+                <div class="kanban-header retirada">
+                    <span>🛍️ Retirada</span>
+                    <span class="badge-contador">
+                        {{ pedidos | selectattr('status_pedido', 'equalto', 'Aguardando retirada') | list | length }}
+                    </span>
+                </div>
+                <div class="kanban-cards">
+                    {% for pedido in pedidos %}
+                        {% if pedido.status_pedido == 'Aguardando retirada' %}
+                            {% include 'partials/card_pedido.html' %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+          
+            <div class="kanban-column">
+                <div class="kanban-header entrega">
+                    <span>🚀 Na Rua</span>
+                    <span class="badge-contador">
+                        {{ pedidos | selectattr('status_pedido', 'equalto', 'Saiu para entrega') | list | length }}
+                    </span>
+                </div>
+                <div class="kanban-cards">
+                    {% for pedido in pedidos %}
+                        {% if pedido.status_pedido == 'Saiu para entrega' %}
+                            {% include 'partials/card_pedido.html' %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+       
+            <div class="kanban-column coluna-secundaria">
+                <div class="kanban-header concluidos">
+                    <span>✅ Concluídos</span>
+                    <span class="badge-contador">
+                        {{ pedidos | selectattr('status_pedido', 'equalto', 'Concluido') | list | length }}
+                    </span>
+                </div>
+                <div class="kanban-cards">
+                    {% for pedido in pedidos %}
+                        {% if pedido.status_pedido == 'Concluido' %}
+                            {% include 'partials/card_pedido.html' %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+        
+            <div class="kanban-column coluna-secundaria">
+                <div class="kanban-header cancelados">
+                    <span>❌ Cancelados</span>
+                    <span class="badge-contador">
+                        {{ pedidos | selectattr('status_pedido', 'equalto', 'Cancelado') | list | length }}
+                    </span>
+                </div>
+                <div class="kanban-cards">
+                    {% for pedido in pedidos %}
+                        {% if pedido.status_pedido == 'Cancelado' %}
+                            {% include 'partials/card_pedido.html' %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    {% else %}
+        <div class="estado-vazio-pedidos">
+            <p>📭 Nenhum pedido recebido até o momento. Aguardando novos clientes!</p>
+        </div>
+    {% endif %}
+
+</body>
+</html>

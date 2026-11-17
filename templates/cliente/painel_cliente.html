@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Painel - Doceria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cliente/painel_cliente.css') }}">
+</head>
+<body>
+    <div class="container-painel">
+        <h1>Painel do Cliente</h1>
+
+        <div class="card-secao">
+            <div class="card-header-custom">Meus Dados</div>
+            <div class="card-body-custom">
+                <form action="{{ url_for('cliente.editar_cliente') }}" method="POST">
+                    <div class="campo-grupo">
+                        <label class="form-label">Nome</label>
+                        <input type="text" class="form-control" name="nome" value="{{ cliente.nome_cliente }}" required>
+                    </div>
+                    <div class="campo-grupo">
+                        <label class="form-label">WhatsApp</label>
+                        <input type="text" class="form-control" name="whatsapp" value="{{ cliente.whatsapp }}" required>
+                    </div>
+                    <button type="submit" class="btn-acao principal">Salvar Alterações</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card-secao">
+            <div class="card-header-custom destaque">Pedidos em Andamento</div>
+            <div class="card-body-custom">
+                {% if pedidos_andamento %}
+                    <ul class="lista-pedidos">
+                        {% for pedido in pedidos_andamento %}
+                            <li class="item-pedido">
+                                <div class="pedido-cabecalho">
+                                    <div>
+                                        <strong>{{ pedido.nome_loja }}</strong>
+                                        <br>
+                                        <strong>Pedido #{{ pedido.numero_pedido }}</strong>
+                                        <br>
+                                        <span class="data-pedido">- Data: {{ pedido.data_pedido }}</span>
+                                        <br>
+                                        <span class="endereco-pedido">Endereço: {{ pedido.rua }}, {{ pedido.numero }} - {{ pedido.bairro }}</span>
+                                    </div>
+                                    <span class="badge-status andamento">{{ pedido.status_pedido }}</span>
+                                </div>
+                                
+                                <hr class="divisor">
+                                <p class="itens-titulo">Itens do Pedido:</p>
+                                <ul class="lista-itens">
+                                    {% for item in pedido.itens %}
+                                        <li>{{ item.quantidade }}x {{ item.nome_produto }} - R$ {{ "%.2f" % item.subtotal }}</li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="valor-total-pedido">
+                                    <strong>Valor Total: R$ {{ "%.2f" % pedido.valor_total }}</strong>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="texto-vazio">Nenhum pedido em andamento no momento.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card-secao">
+            <div class="card-header-custom historico">Histórico de Pedidos</div>
+            <div class="card-body-custom">
+                {% if historico_pedidos %}
+                    <ul class="lista-pedidos">
+                        {% for pedido in historico_pedidos %}
+                            <li class="item-pedido historico-item">
+                                <div class="pedido-cabecalho">
+                                    <div>
+                                        <strong>Pedido #{{ pedido.numero_pedido }}</strong>
+                                        <span class="data-pedido">- Data: {{ pedido.data_pedido }}</span>
+                                        <br>
+                                        <span class="valor-historico">Valor Total: R$ {{ "%.2f" % pedido.valor_total }}</span>
+                                    </div>
+                                    <span class="badge-status concluido">{{ pedido.status_pedido }}</span>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="texto-vazio">Você ainda não possui histórico de pedidos anteriores.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

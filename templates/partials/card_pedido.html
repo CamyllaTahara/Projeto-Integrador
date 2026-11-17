@@ -1,0 +1,101 @@
+<div class="pedido-card">
+    <h3>Pedido #{{ pedido.numero_pedido }} — Cliente: {{ pedido.nome_cliente }}</h3>
+    <p><strong>Status atual:</strong> <span class="status">{{ pedido.status_pedido }}</span></p>
+    <p><strong>Modalidade:</strong> {{ pedido.modalidade }}</p>
+
+    <div class="destaque-horario">
+
+    📅 Data agendada: {{ pedido.data_agendada }}
+
+    <br>
+
+    🕒 Horário:
+    {% if pedido.hora_inicio and pedido.hora_fim %}
+    {{ pedido.hora_inicio }}hrs às {{ pedido.hora_fim }}hrs
+{% else %}
+    Horário não informado
+{% endif %}
+
+</div>
+
+    <h3>📍 Tipo de Atendimento</h3>
+    {% if pedido.modalidade == 'retirada' or pedido.modalidade == 'Retirada' %}
+        <div style="background-color: #e9ecef; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+            <p>📦 <strong>Modalidade: Retirada no Local</strong></p>
+            <p><em>O cliente irá buscar o seu pedido diretamente na loja.</em></p>
+        </div>
+    {% else %}
+        <div class="destaque-endereco">
+            📍 Endereço de Entrega:<br>
+            {% if pedido.endereco %}
+                {{ pedido.endereco.rua }}, nº {{ pedido.endereco.numero }} — Bairro: {{ pedido.endereco.bairro }}<br>
+                CEP: {{ pedido.endereco.cep }} 
+                {% if pedido.endereco.complemento %} | Compl: {{ pedido.endereco.complemento }}{% endif %}
+                {% if pedido.endereco.referencia %}<br>Ref: {{ pedido.endereco.referencia }}{% endif %}
+            {% else %}
+                Endereço não informado.
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <p><strong>Itens do Pedido:</strong></p>
+    <ul>
+        {% for item in pedido.itens %}
+            <li>{{ item.quantidade }}x {{ item.nome_produto }} — R$ {{ "%.2f"|format(item.preco_unitario) }}</li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Total Geral:</strong> R$ {{ "%.2f"|format(pedido.valor_total) }}</p>
+    
+    <form action="{{ url_for('loja.atualizar_status_pedido', id_pedido=pedido.id_pedido) }}" method="POST">
+
+    <select name="status_pedido">
+
+        <option value="Aguardando Confirmação"
+            {% if pedido.status_pedido == 'Aguardando Confirmação' %}selected{% endif %}>
+            Aguardando Confirmação
+        </option>
+
+        <option value="Confirmado"
+            {% if pedido.status_pedido == 'Confirmado' %}selected{% endif %}>
+            Confirmado
+        </option>
+
+        <option value="Em preparo"
+            {% if pedido.status_pedido == 'Em preparo' %}selected{% endif %}>
+            Em preparo
+        </option>
+
+        <option value="Aguardando retirada"
+            {% if pedido.status_pedido == 'Aguardando retirada' %}selected{% endif %}>
+            Aguardando retirada
+        </option>
+
+        <option value="Saiu para entrega"
+            {% if pedido.status_pedido == 'Saiu para entrega' %}selected{% endif %}>
+            Saiu para entrega
+        </option>
+
+        <option value="Concluido"
+            {% if pedido.status_pedido == 'Concluido' %}selected{% endif %}>
+            Concluído
+        </option>
+
+        <option value="Cancelado"
+            {% if pedido.status_pedido == 'Cancelado' %}selected{% endif %}>
+            Cancelado
+        </option>
+
+    </select>
+
+    <button type="submit">Atualizar & Avisar Cliente</button>
+
+    <a href="{{ url_for('loja.imprimir_pedido', id_pedido=pedido.id_pedido) }}" target="_blank" class="btn-imprimir">
+    🖨️ Imprimir comanda
+</a>
+ 
+
+</form>
+</div>
+
+    

@@ -1,0 +1,35 @@
+Date: 8/11/2026
+Time: 17:51
+Phone Number: +5511963771721
+Message: Olá Luiz, o seu pedido #19 está sendo preparado com muito carinho para você.
+--------------------
+Date: 8/11/2026
+Time: 17:52
+Phone Number: +5511975389011
+Message: Olá Teste 1, o seu pedido #20 está sendo preparado com muito carinho para você.
+--------------------
+Date: 8/11/2026
+Time: 17:52
+Phone Number: +5511975389011
+Message: Olá Teste 1, o seu pedido #20 está sendo preparado com muito carinho para você.
+--------------------
+Date: 8/11/2026
+Time: 17:57
+Phone Number: +5511975389011
+Message: Olá Teste 1, o seu pedido #20 está prontinho. Estamos te aguardando aqui na loja para retirá-lo. Lembre-se, seu pedido ficará disponível para retirada até o horário de fechamento da loja, após este prazo, apenas no dia seguinte.
+--------------------
+Date: 8/11/2026
+Time: 18:1
+Phone Number: +5511975389011
+Message: Olá Teste 1, o status do seu pedido #20 foi atualizado para: *Concluido*. Mais informações, trate diretamente com a loja.
+--------------------
+Date: 8/11/2026
+Time: 18:3
+Phone Number: +5511975389011
+Message: Olá Teste 1, o status do seu pedido #20 foi atualizado para: *Concluido*. Mais informações, trate diretamente com a loja.
+--------------------
+Date: 8/11/2026
+Time: 18:5
+Phone Number: +5511975389011
+Message: Olá Teste 1, o status do seu pedido #20 foi atualizado para: *Concluido*. Mais informações, trate diretamente com a loja.
+--------------------

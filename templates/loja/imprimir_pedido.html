@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Imprimir Pedido #{{ pedido.id_pedido }}</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/loja/comanda.css') }}">
+    
+</head>
+<body onload="window.print()">
+
+    <div class="center bold" style="font-size: 14px;">DOCERIA / LOJA</div>
+    <div class="center">Comprovante de Produção</div>
+    
+    <div class="line"></div>
+    
+    <div><strong>Pedido:</strong> #{{ pedido.numero_pedido }}</div>
+    <div><strong>Data/Hora:</strong> {{ pedido.data_pedido }}</div>
+    <div><strong>Cliente:</strong> {{ pedido.nome_cliente }}</div>
+    <div><strong>Tel/Whats:</strong> {{ pedido.whatsapp }}</div>
+
+    {% if pedido.data_agendada %}
+    <div class="line"></div>
+    <div class="center bold" style="font-size: 13px; background: #eee; padding: 3px;">
+        ⏰ AGENDADO PARA:<br>
+        {{ pedido.data_agendada }}
+    </div>
+    {% endif %}
+
+    🕒 Horário:
+    {% if pedido.hora_inicio and pedido.hora_fim %}
+    {{ pedido.hora_inicio }}hrs às {{ pedido.hora_fim }}hrs
+{% else %}
+    Horário não informado
+{% endif %}
+    
+    {% if pedido.modalidade == 'entrega' %}
+    <div><strong>Endereço para entrega:</strong> {{ pedido.rua}}, {{pedido.numero}}</div>
+    <div><strong>Bairro:</strong>{{pedido.bairro}} </div>
+    <div><strong>CEP:</strong>{{pedido.cep}}</div>
+
+    {% if pedido.complemento == "" %}
+    <div>Sem complemento</div>
+    {% else %}
+    <div><strong>Complemento:</strong>{{pedido.complemento}}</div>
+    {% endif %}
+
+    
+    {% if pedido.referencia== "" %}
+    <div>Sem referência</div>
+    {% else %}
+    <div><strong>Referência:</strong>{{pedido.referencia}}</div>
+    {% endif %}
+    
+
+    {% else %}
+    <div class="bold center" style="margin-top: 5px;">* RETIRADA NO BALCÃO *</div>
+    {% endif %}
+
+
+
+    <div class="line"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Qtd / Item</th>
+                <th class="right">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in itens %}
+            <tr>
+                <td>{{ item.quantidade }}x {{ item.nome_produto }}</td>
+                <td class="right">R$ {{ "%.2f" % item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="totais">
+    <div class="linha-total">
+        <span>Taxa de Entrega:</span>
+        <span>R$ {{ "%.2f" % pedido.taxa_entrega }}</span>
+    </div>
+    <BR>
+    <div class="linha-total bold">
+        <span>Total:</span>
+        <span>R$ {{ "%.2f" % pedido.valor_total }}</span>
+    </div>
+</div>
+  
+
+    {% if pedido.observacao %}
+    <div class="line"></div>
+    <div><strong>Obs:</strong> {{ pedido.observacao }}</div>
+    {% endif %}
+
+    <div class="line"></div>
+    <div class="center" style="font-size: 10px;">Sistema de Gestão - AgendeAQUI</div>
+
+    
+    <div class="center no-print" style="margin-top: 15px;">
+        <button onclick="window.print()" style="padding: 8px 15px; font-weight: bold; cursor: pointer;">Imprimir Novamente</button>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedido Realizado com Sucesso!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/publico/pedido_sucesso.css') }}">
+</head>
+<body>
+    <div class="container-sucesso">
+        <h1>🎉 Pedido Realizado com Sucesso!</h1>
+        
+        <p class="mensagem-sucesso">
+            Obrigado pela sua compra! O seu pedido foi registrado com o status <strong>Aguardando Confirmação</strong>.
+        </p>
+
+        <div class="aviso-pagamento">
+            <strong>⚠️ Atenção ao Pagamento:</strong>
+            <p>
+                Certifique-se de ter realizado a transferência via PIX com o valor exato do pedido. 
+                Assim que identificarmos o pagamento, sua produção será iniciada!
+            </p>
+        </div>
+
+        <div class="acoes-sucesso">
+            <a href="{{ url_for('publico.cardapio_publico', id_loja=session.get('id_loja', 1)) }}" class="btn-acao">
+                Voltar ao Cardápio
+            </a>
+             <div class="acoes-sucesso"></div>
+            <a href="{{ url_for('cliente.painel_cliente') }}" class="btn-acao principal">
+        Ver meus pedidos
+            </a>
+             </div>
+        </div>
+    </div>
+</body>
+</html>

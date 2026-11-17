@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Disponibilidade - Painel da Loja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loja/disponibilidade.css') }}">
+</head>
+<body>
+
+    <div class="container-disponibilidade">
+        <h1>Gerenciar Horários de Disponibilidade</h1>
+        <p class="subtitulo">Cadastre datas, horários de atendimento e a capacidade máxima de pedidos.</p>
+
+        <form method="POST" class="form-disponibilidade">
+            <div class="campo-grid">
+                <div class="campo-grupo">
+                    <label for="data_disponivel">Data:</label>
+                    <input type="date" id="data_disponivel" name="data_disponivel" class="form-control" required>
+                </div>
+                
+                <div class="campo-grupo">
+                    <label for="capacidade_maxima">Capacidade Máxima:</label>
+                    <input type="number" id="capacidade_maxima" name="capacidade_maxima" class="form-control" value="10" min="1" required>
+                </div>
+            </div>
+
+            <div class="campo-grid">
+                <div class="campo-grupo">
+                    <label for="hora_inicio">Hora Início:</label>
+                    <input type="time" id="hora_inicio" name="hora_inicio" class="form-control" required>
+                </div>
+                
+                <div class="campo-grupo">
+                    <label for="hora_fim">Hora Fim:</label>
+                    <input type="time" id="hora_fim" name="hora_fim" class="form-control" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-acao">Cadastrar Horário</button>
+        </form>
+
+        <hr class="divisor">
+
+
+        <h3>Horários e Datas Cadastradas</h3>
+        <div class="tabela-container">
+            <table class="tabela-custom">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Início</th>
+                        <th>Fim</th>
+                        <th>Capacidade</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for disp in disponibilidade %}
+                    <tr>
+                        <td>{{ disp.data_disponivel }}</td>
+                        <td>{{ disp.hora_inicio }}</td>
+                        <td>{{ disp.hora_fim }}</td>
+                        <td>{{ disp.capacidade_maxima }}</td>
+                        <td>
+                            <span class="badge-status {{ 'ativo' if disp.ativo else 'inativo' }}">
+                                {{ 'Ativo' if disp.ativo else 'Inativo' }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="vazio">Nenhum horário cadastrado ainda.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="rodape-voltar">
+            <a href="{{ url_for('loja.painel_loja') }}" class="link-voltar">← Voltar ao Painel da Loja</a>
+        </div>
+    </div>
+
+</body>
+</html>

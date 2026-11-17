@@ -1,0 +1,181 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.container-perfil {
+    background: white;
+    padding: 35px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(224, 109, 132, 0.15);
+    width: 100%;
+    max-width: 750px;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #b84a62;
+    text-align: center;
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.subtitulo {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+.form-perfil {
+    background-color: #fdf8f9;
+    border: 1px solid #f1d3d8;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.campo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.campo-grupo {
+    margin-bottom: 15px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+    outline: none;
+    background-color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    border-color: #e06d84;
+    box-shadow: 0 0 0 0.2rem rgba(224, 109, 132, 0.25);
+}
+
+/* Exibição da Logo Atual */
+.logo-atual-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #f1d3d8;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+.img-logo-atual {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+
+.legenda-logo {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 600;
+}
+
+/* Upload customizado */
+.input-arquivo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.input-file-oculto {
+    display: none;
+}
+
+.btn-escolher-arquivo {
+    background-color: #fef2f4;
+    color: #b84a62;
+    border: 1px solid #e06d84;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+.btn-escolher-arquivo:hover {
+    background-color: #f8d7dc;
+}
+
+.texto-arquivo-escolhido {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Botão Principal */
+.btn-acao {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+}
+
+.btn-acao.principal {
+    background-color: #e06d84;
+    color: white;
+    margin-top: 10px;
+}
+
+.btn-acao.principal:hover {
+    background-color: #b84a62;
+}
+
+.rodape-voltar {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.link-voltar {
+    color: #b84a62;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.link-voltar:hover {
+    text-decoration: underline;
+}
